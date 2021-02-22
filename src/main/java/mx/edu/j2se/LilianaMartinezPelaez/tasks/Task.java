@@ -1,6 +1,7 @@
 package mx.edu.j2se.LilianaMartinezPelaez.tasks;
 
-public class Task {
+public class Task
+{
     String title;
     int time;
     int start;
