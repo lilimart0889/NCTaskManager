@@ -46,6 +46,11 @@ public class Main {
 		Task Gym = new Task("Gym",1,5,2);
 		System.out.println("\nNueva Actividad: " + Gym.getTitle() + " Start: " + Gym.getStartTime()
 				            + " End: " + Gym.getEndTime() + " Interval: " + Gym.getRepeatInterval());
+
+		Tiempo temp = new Tiempo();
+		System.out.println("La hora se imprimirá de la forma: " + temp.horaMilitar());
+		temp.ponerTiempo(59,6);
+		System.out.println(temp.horaMilitar());
 	}
 
 }
