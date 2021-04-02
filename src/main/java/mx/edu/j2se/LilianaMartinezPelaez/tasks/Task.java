@@ -6,6 +6,8 @@ Netcracker Training Program
 Practical work no.1: Project Structure
 */
 
+import java.util.IllegalFormatException;
+
 public class Task {
 
     //Instance variables
@@ -20,19 +22,44 @@ public class Task {
 
     //Constructor for an inactive task to run at a specified time
     // without repeating with a given name.
-    public Task(String title, int time) {
+    public Task(String title, int time) throws IllegalArgumentException {
         this.title = title;
         this.time = time;
-    }
+        try { //If time is negative, the program will throw an exception
+            if (time < 0)
+                throw new IllegalArgumentException();
+        } catch (IllegalArgumentException e) {
+            System.out.println("You cannot use a negative number.\nExecution has been stopped.\n" + e);
+        }
+     }
 
     //Constructor for an inactive task to run within the specified time range
     // (including the start and the end time) with the set repetition interval and
     // with a given name.
-    public Task(String title, int start, int end, int interval) {
+    public Task(String title, int start, int end, int interval) throws IllegalArgumentException {
         this.title = title;
         this.start = start;
         this.end = end;
         this.interval = interval;
+        try { //If start or end are negative, the program will throw an exception
+            if (start < 0 || end < 0 || interval < 0)
+                throw new IllegalArgumentException();
+        } catch (IllegalArgumentException e1) {
+            System.out.println("You cannot use a negative number.\nExecution has been stopped.\n" + e1);
+        }
+        try { //If interval is negative, the program will throw an exception
+            if (interval == 0)
+                throw new IllegalArgumentException();
+        } catch (IllegalArgumentException e2) {
+            System.out.println("If interval is zero, please try a non-repetitive task." +
+                               "\nExecution has been stopped.\n" + e2);
+        }
+        try { //If start time is greater than end time, the program will throw an exception
+            if (end < start)
+                throw new IllegalArgumentException();
+        } catch (IllegalArgumentException e3) {
+            System.out.println("Start time cannot be greater than end time.\nExecution has been stopped.\n" + e3);
+        }
     }
 
     //*********************************
@@ -60,7 +87,8 @@ public class Task {
     }
 
     public void setActive(boolean active) {
-            this.active = active;
+
+        this.active = active;
     }
 
     //Methods for reading and changing execution time for non-repetitive tasks.
@@ -86,8 +114,10 @@ public class Task {
     //Methods for reading and changing execution time for repetitive tasks.
     public int getStartTime() {
         if (interval == 0) { // Non-repetitive task
+            System.out.print("Time: ");
             return time;
         } else { // Repetitive task
+            System.out.print("Time: ");
             return start;
         }
     }
