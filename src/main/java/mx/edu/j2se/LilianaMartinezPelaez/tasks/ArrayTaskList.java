@@ -6,14 +6,18 @@ Practical work no.2: Arrays and Links
 */
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ArrayTaskList {
 
     public Task[] ArrayTaskList;
     public int length;
     public int size;
+    public boolean remove;
+    public int from;
+    public int to;
 
-    // Method with an specific array length
+    // Contructor
     public ArrayTaskList() {
         ArrayTaskList = new Task[3];
         length = 3;
@@ -30,7 +34,7 @@ public class ArrayTaskList {
         return size;
     }
 
-    //Para obtener la referencia donde está el arreglo por completo
+    // Method that give the reference in heap
     public Task[] getList()
     {
         return ArrayTaskList;
@@ -38,6 +42,15 @@ public class ArrayTaskList {
 
     // Method that returns a task which takes the specified place in the list
     public Task getTask(int index) {
+//        try {
+//            if (index < ArrayTaskList.length)
+//                throw new IndexOutOfBoundsException();
+//        } catch (IndexOutOfBoundsException e) {
+//            ArrayTaskList = new Task[index];
+//            return ArrayTaskList[index];
+//        }
+//        System.out.println("ddd");
+
         return ArrayTaskList[index];
     }
 
@@ -53,23 +66,55 @@ public class ArrayTaskList {
 
     // Method that removes a task from the list and returns true, if it was in the list.
     // If the list contains the same task several times, any of them should be removed.
-
-    /*I'm still working in this method.
-    */
-    public void remove(Task task) {
-        int count = ArrayTaskList.length;
-        for (int i = 0; i < count; i++) {
-            if (ArrayTaskList[i].getTitle().equals(getTask(i).getTitle())) {
-                ArrayTaskList[i] = ArrayTaskList[count - 1];
-                count--;
-                break;
-            } else {
-                System.out.println("No está en la lista.");
-                //return false;
-            }
+    public boolean remove(Task task) {
+        boolean remove = false;
+        Integer removeTasks = 0;
+        Integer notInList = 0;
+        for(int i = 0; i < size; i++) {
+                //Task taskInArray = ArrayTaskList[i];
+                if (ArrayTaskList[i].getTitle().equals(task.getTitle())) { // Parameter "task" must be equal to the task on the list
+                    ArrayTaskList[i] = null; // Making null the task to be deleted
+                    removeTasks++; // Counting for deleted tasks
+                  remove = true;
+                }
+//                NEED A CATCH IF THE TASK IS NOT ON THE LIST
+//                else {
+//                    notInList++;
+//                }
         }
 
+        Task[] newArrayList = new Task[size - removeTasks]; // New size considering the deleted tasks (removeTasks)
+        Integer indexnewArrayList = 0;
+        for (Task oldTasks : ArrayTaskList) {
+            if (oldTasks != null) { // Adding the activities that are not null (meaning that these still on the list)
+                    newArrayList[indexnewArrayList] = oldTasks;
+                    indexnewArrayList++; // Final new size for the array
+            }
+        }
+        this.size = indexnewArrayList; // Resseting value
+        this.ArrayTaskList = Arrays.copyOf(newArrayList, indexnewArrayList); //Resseting data
+        return remove; //Returning boolean value
     }
+
+    // Method that returns a subset of tasks that are scheduled for execution at least once after the "from" time,
+    // and not later than the "to" time.
+    public Task[] incoming(int from, int to) {
+
+        Task[] subArrayTaskList = new Task[size];
+        Integer count = 0;
+        for (int i = 0; i < size; i++) {
+            if (from <= ArrayTaskList[i].getStartTime() && ArrayTaskList[i].getEndTime() <= to ||
+                    ArrayTaskList[i].getRepeatInterval() !=0) { // We need to consider if the tasks is repetitive
+                if (ArrayTaskList[i] != null) {
+                        System.out.println(ArrayTaskList[i].getTitle());
+                        subArrayTaskList[count] = ArrayTaskList[i];
+                        count++;
+                }
+            }
+        }
+        return subArrayTaskList;
+    }
+
 }
 
 

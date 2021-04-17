@@ -94,10 +94,8 @@ public class Task {
     //Methods for reading and changing execution time for non-repetitive tasks.
     public int getTime() {
         if (interval != 0) {  // Repetitive task
-            System.out.print("Time: ");
             return start;
         } else { // Non-repetitive task
-            System.out.print("Time: ");
             return time;
         }
     }
@@ -114,10 +112,8 @@ public class Task {
     //Methods for reading and changing execution time for repetitive tasks.
     public int getStartTime() {
         if (interval == 0) { // Non-repetitive task
-            System.out.print("Time: ");
             return time;
         } else { // Repetitive task
-            System.out.print("Time: ");
             return start;
         }
     }
