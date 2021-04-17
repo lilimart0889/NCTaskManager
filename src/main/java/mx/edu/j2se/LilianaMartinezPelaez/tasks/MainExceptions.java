@@ -30,5 +30,19 @@ public class MainExceptions {
 
         // Creating a repetitive task object with zero interval.
         Task Writing = new Task("Writing",1,9,0);
+
+        // Creating tasks and store them on a list
+        ArrayTaskList aprilTasks = new ArrayTaskList();
+        aprilTasks.add(new Task("Visa Procedures",10));
+        aprilTasks.add(new Task("Dinner with Oswa",20));
+        aprilTasks.add(new Task("Cooking",8,20,4));
+        System.out.println(" ");
+
+        // Calling a task by getTask method generating an ArrayIndexOutOfBoundsException error
+        System.out.println("Activity: " +aprilTasks.getTask(0).getTitle());
+        System.out.println("\n\nActivity: " +aprilTasks.getTask(3).getTitle());
+        System.out.println("\n\nActivity: " +aprilTasks.getTask(-1).getTitle());
+
+
     }
 }

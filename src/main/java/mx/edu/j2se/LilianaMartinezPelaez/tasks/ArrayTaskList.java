@@ -3,10 +3,10 @@ package mx.edu.j2se.LilianaMartinezPelaez.tasks;
 @author LiliMP
 Netcracker Training Program
 Practical work no.2: Arrays and Links
+Practical work no.3: Exceptions
 */
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class ArrayTaskList {
 
@@ -17,7 +17,7 @@ public class ArrayTaskList {
     public int from;
     public int to;
 
-    // Contructor
+    // Constructor
     public ArrayTaskList() {
         ArrayTaskList = new Task[3];
         length = 3;
@@ -41,17 +41,13 @@ public class ArrayTaskList {
     }
 
     // Method that returns a task which takes the specified place in the list
-    public Task getTask(int index) {
-//        try {
-//            if (index < ArrayTaskList.length)
-//                throw new IndexOutOfBoundsException();
-//        } catch (IndexOutOfBoundsException e) {
-//            ArrayTaskList = new Task[index];
-//            return ArrayTaskList[index];
-//        }
-//        System.out.println("ddd");
+    public Task getTask(int index) throws ArrayIndexOutOfBoundsException {
+        if(index < size && index >= 0) {
+            return ArrayTaskList[index];
+        } else {
+             throw new ArrayIndexOutOfBoundsException("Invalid index. Please, try again.");
 
-        return ArrayTaskList[index];
+        }
     }
 
     // Method that adds the specified task to the list
@@ -69,18 +65,13 @@ public class ArrayTaskList {
     public boolean remove(Task task) {
         boolean remove = false;
         Integer removeTasks = 0;
-        Integer notInList = 0;
         for(int i = 0; i < size; i++) {
-                //Task taskInArray = ArrayTaskList[i];
-                if (ArrayTaskList[i].getTitle().equals(task.getTitle())) { // Parameter "task" must be equal to the task on the list
-                    ArrayTaskList[i] = null; // Making null the task to be deleted
-                    removeTasks++; // Counting for deleted tasks
-                  remove = true;
-                }
-//                NEED A CATCH IF THE TASK IS NOT ON THE LIST
-//                else {
-//                    notInList++;
-//                }
+            //Task taskInArray = ArrayTaskList[i];
+            if (ArrayTaskList[i].getTitle().equals(task.getTitle())) { // Parameter "task" must be equal to the task on the list
+                ArrayTaskList[i] = null; // Making null the task to be deleted
+                removeTasks++; // Counting for deleted tasks
+                remove = true;
+            }
         }
 
         Task[] newArrayList = new Task[size - removeTasks]; // New size considering the deleted tasks (removeTasks)
@@ -113,6 +104,27 @@ public class ArrayTaskList {
             }
         }
         return subArrayTaskList;
+    }
+
+    /*I´m trying to make my own exception if the task is not from the specific list.
+    I'm still working in this.
+    */
+
+    public class TasksIsNotOnList extends Exception {
+        public TasksIsNotOnList(Task task) throws Exception {
+            super();
+            for(int i = 0; i < size; i++) {
+                if(task.getTitle() != ArrayTaskList[i].getTitle());
+                throw new Exception("ERROR");
+
+            }
+        }
+        @Override
+        public String getMessage() {
+            String message = "This task is not on this list.";
+            return message;
+        }
+
     }
 
 }
